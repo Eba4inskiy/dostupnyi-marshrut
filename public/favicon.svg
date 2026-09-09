@@ -58,12 +58,5 @@
   <path d="M 312 42 C 335 36, 355 48, 380 42 L 380 64 C 355 70, 335 58, 312 64 Z" fill="url(#uaBlue)" filter="url(#subtleShadow)" />
   <path d="M 312 64 C 335 58, 355 70, 380 64 L 380 86 C 355 92, 335 80, 312 86 Z" fill="url(#uaYellow)" filter="url(#subtleShadow)" />
 
-  <text x="250" y="465" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="28" fill="#0F172A" letter-spacing="1">
-    ДОСТУПНИЙ
-  </text>
-  <text x="250" y="500" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="600" font-size="22" fill="#2563EB" letter-spacing="3">
-    МАРШРУТ
-  </text>
   
-  <rect x="210" y="520" width="80" height="4" rx="2" fill="#FFD700" />
 </svg>
