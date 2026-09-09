@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Приватність і умови · Доступний маршрут</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./fonts/fonts.css">
+  <script>
+    try {
+      const preference = localStorage.getItem('dostupnyi-marshrut-theme');
+      document.documentElement.classList.toggle('dark', preference === 'dark' || ((!preference || preference === 'system') && matchMedia('(prefers-color-scheme: dark)').matches));
+    } catch (_) {}
+  </script>
+  <style>
+    :root { color-scheme:light; --bg:#f5f7fb; --card:#fff; --text:#243044; --link:#245bdd; --line:#dce3ec; }
+    :root.dark { color-scheme:dark; --bg:#0e1725; --card:#152133; --text:#e6edf8; --link:#a6c6ff; --line:#32435b; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font:16px/1.75 Manrope,Arial,sans-serif; }
+    main { max-width:800px; margin:32px auto; padding:32px; background:var(--card); border:1px solid var(--line); border-radius:20px; }
+    a { color:var(--link); text-underline-offset:3px; }
+    a:focus-visible { outline:3px solid var(--link); outline-offset:4px; }
+    .brand { display:inline-flex; align-items:center; gap:12px; font-weight:800; text-decoration:none; }
+    .brand img { width:48px; height:48px; }
+    h1 { font-size:28px; line-height:1.35; margin:28px 0 16px; }
+    h2 { font-size:23px; margin-top:36px; line-height:1.4; scroll-margin-top:24px; }
+    nav { display:flex; gap:20px; flex-wrap:wrap; }
+    p { margin:14px 0; }
+    footer { border-top:1px solid var(--line); padding-top:20px; margin-top:32px; }
+    @media(max-width:600px) { main { margin:0; border:0; border-radius:0; padding:24px 20px; } h1 { font-size:25px; } }
+  </style>
+</head>
+<body>
+<main>
+  <a class="brand" href="./"><img src="./favicon.svg" alt="">Доступний маршрут</a>
+  <h1>Приватність і умови користування</h1>
+  <nav aria-label="Розділи сторінки"><a href="#privacy">Приватність</a><a href="#terms">Умови користування</a></nav>
+  <section id="privacy">
+    <h2>Приватність</h2>
+    <p>Геолокація запитується лише після натискання «Моє розташування» та дозволу браузера. Вона визначає точку маршруту; безперервного відстеження немає. Розрахунок шляху відбувається у браузері. Застосунок не зберігає історію пересувань на своєму сервері.</p>
+    <p>Вибір світлої або темної теми зберігається локально в цьому браузері. Його можна видалити, очистивши дані сайту.</p>
+    <p>Фон карти завантажується з OpenStreetMap. Постачальник отримує звичайні мережеві дані запиту, зокрема IP-адресу й номери ділянок карти. Докладніше — у <a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noreferrer">політиці приватності OpenStreetMap Foundation</a>.</p>
+    <p>Якщо пошук Google підключений власником сайту, компоненти Google завантажуються після натискання «Знайти в Google Maps». Google отримує текст запиту, координати точки, біля якої виконується пошук, та мережеві дані. Це може бути ваша геопозиція, якщо її обрано точкою пошуку. Дані обробляються відповідно до <a href="https://policies.google.com/privacy?hl=uk" target="_blank" rel="noreferrer">Політики конфіденційності Google</a>. Перегляд карток і перехід за зовнішніми посиланнями також звертаються до Google.</p>
+    <p>Картки та фотографії Google не зберігаються в базі застосунку. Обрана точка використовується для поточного маршруту в браузері; після перезавантаження сторінки вона не відновлюється.</p>
+    <p>У версії для GitHub Pages додавання спільних повідомлень, фото та підтверджень недоступне. У повній серверній версії добровільно надіслані опис, координати місця, роль автора й фотографія стають доступними іншим користувачам. Для обліку підтверджень використовується технічний ідентифікатор; у версії без входу він зберігається в cookie. Не додавайте чужі персональні дані без дозволу.</p>
+  </section>
+  <section id="terms">
+    <h2>Умови користування</h2>
+    <p>«Доступний маршрут» допомагає попередньо спланувати шлях на правому березі Києва. Це пілотний сервіс без покрокової навігації. Дані можуть бути неповними або застарілими. Маршрут не є гарантією прохідності чи доступності; оцінюйте фактичний стан на місці.</p>
+    <p>Позначка доступного входу в Google описує заклад, а не весь шлях до нього. Відсутність позначки не підтверджує доступність або недоступність. Повідомлення спільноти та ролі їхніх авторів не є незалежним аудитом.</p>
+    <p>Для використання функцій Google Maps діють <a href="https://maps.google.com/help/terms_maps.html" target="_blank" rel="noreferrer">Додаткові умови використання Google Maps / Google Earth</a> і <a href="https://policies.google.com/terms?hl=uk" target="_blank" rel="noreferrer">Загальні умови використання Google</a>. Картки, фотографії й відгуки належать відповідним правовласникам; зберігайте зазначення джерел і не використовуйте сервіс для їх масового копіювання.</p>
+    <p>Мережа шляхів базується на <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap та ліцензії ODbL</a>. Джерела міських даних і дати їх отримання наведені в застосунку в розділі «Звідки дані на карті».</p>
+    <p>Надсилаючи власне спостереження у повній версії, додавайте правдиві відомості й лише ті фотографії, які маєте право публікувати. Надіслані матеріали використовуються для показу місця іншим користувачам.</p>
+  </section>
+  <footer><a href="./">Повернутися до карти</a></footer>
+</main>
+</body>
+</html>

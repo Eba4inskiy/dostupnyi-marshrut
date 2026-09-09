@@ -1,0 +1,25 @@
+.google-sheet[data-slot=sheet-content] { width: min(100%, 460px); max-width: 460px; }
+.google-panel-body { display: flex; flex-direction: column; gap: 18px; }
+.google-search-form { display: grid; gap: 10px; }
+.google-search-form label { font-size: 14px; font-weight: 700; color: var(--foreground); }
+.google-search-form input { font-size: 16px; min-height: 44px; }
+.google-source-button.sources-button { margin-top: 16px; }
+.google-source-button.sources-button strong { color: var(--foreground); }
+.google-unavailable { padding: 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--muted); display: grid; gap: 12px; }
+.google-unavailable h3 { font-size: 17px; }
+.google-unavailable p,.google-empty { font-size: 14px; line-height: 1.65; color: var(--muted-foreground); }
+.google-unavailable a { display: flex; gap: 8px; align-items: center; color: var(--link); font-size: 14px; text-decoration: underline; }
+.google-loading { display: flex; align-items: center; gap: 8px; color: var(--muted-foreground); font-size: 14px; }
+.google-selection { border-top: 1px solid var(--border); padding-top: 18px; }
+.google-selection h3 { margin-bottom: 12px; font-size: 16px; }
+.google-results>gmp-place-search,.google-details>gmp-place-details { display: block; width: 100%; color-scheme: light; }
+html.dark .google-results>gmp-place-search,html.dark .google-details>gmp-place-details { color-scheme: dark; }
+.google-route-actions { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 16px; }
+.google-route-actions button { flex: 1; min-width: 145px; min-height: 44px; }
+.google-sheet .inline-error { display: block; line-height: 1.65; }
+.source-card .text-button { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; padding: 8px 0; color: var(--link); }
+.leaflet-container .leaflet-control-attribution a.google-map-credit { color: #1f1f1f; font: 400 12px/1.5 Manrope, Arial, sans-serif; white-space: nowrap; }
+html.dark .leaflet-container .leaflet-control-attribution a.google-map-credit { color: #fff; }
+.app-info-links { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 10px; font-size: 12px; }
+.app-info-links a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+@media(max-width:720px) { .google-sheet[data-slot=sheet-content] { width: 100%; max-width: 100%; } }

@@ -1,0 +1,95 @@
+:root {
+  color-scheme: light;
+  --link: #245bdd;
+  --map-canvas: #e9efea;
+}
+html.dark {
+  color-scheme: dark;
+  --background: #0e1725;
+  --foreground: #e6edf8;
+  --card: #152133;
+  --card-foreground: #e6edf8;
+  --popover: #19273b;
+  --popover-foreground: #e6edf8;
+  --primary: #91b7ff;
+  --primary-foreground: #10203a;
+  --secondary: #22334b;
+  --secondary-foreground: #dce8fb;
+  --muted: #1d2c41;
+  --muted-foreground: #a5b5cb;
+  --accent: #243b61;
+  --accent-foreground: #c4d9ff;
+  --destructive: #ff9b92;
+  --border: #32435b;
+  --input: #42546e;
+  --ring: #91b7ff;
+  --sidebar: #152133;
+  --sidebar-foreground: #e6edf8;
+  --sidebar-primary: #91b7ff;
+  --sidebar-primary-foreground: #10203a;
+  --sidebar-accent: #243b61;
+  --sidebar-accent-foreground: #c4d9ff;
+  --sidebar-border: #32435b;
+  --sidebar-ring: #91b7ff;
+  --link: #a6c6ff;
+  --map-canvas: #121c2b;
+}
+.brand-symbol:after { display: none; }
+.brand-symbol > img { width: 100%; height: 100%; display: block; border-radius: inherit; }
+.theme-toggle[data-slot=button] { width: 38px; height: 38px; flex-shrink: 0; color: var(--foreground); background: var(--card); border: 1px solid var(--border); border-radius: 10px; margin-right: 5px; }
+.theme-toggle[data-slot=button]:hover { background: var(--accent); }
+html.dark body { background: var(--background); }
+html.dark :is(.app-header,.planner-sidebar,.skip-link,.profile-card,.route-card,.swap-button,.map-chip,.map-chip:not(.active),.map-city-label,.map-right-controls>button,.zoom-controls,.map-right-controls button,.route-map-label,.map-context-card,.report-map-button,.clicked-point-card,.legend-card,.tile-notice,.photo-preview>button) {
+  background: var(--card); border-color: var(--border); color: var(--foreground);
+}
+html.dark :is(.places-form,.source-card,.no-photo,.photo-preview,.photo-upload,.form-field>input,.form-field>textarea,.report-location,.form-field [data-slot=select-trigger],.vote-actions>button,.secondary-button) {
+  background: var(--background); border-color: var(--border); color: var(--foreground);
+}
+html.dark :is(.profile-card>span:not(.profile-tick),.preferences-list>label>span,.route-card-top,.route-card-metrics strong,.community-stats strong,.community-place-list strong,.app-dialog [data-slot=dialog-title],.how-steps h3,.detail-sheet [data-slot=sheet-title],.route-steps button,.detail-description,.report-metadata dd,.form-field>label:not(.photo-upload),.sources-button strong,.source-card h3,.source-card p,.location-combobox input,.map-context-card strong) { color: var(--foreground); }
+html.dark :is(.eyebrow,.subtitle,.profile-note,.small-muted,.data-note,.alternative-note,.place-picker>label,.preferences-list>label>span>svg,.route-card-metrics,.route-card-metrics>svg,.sidebar-community p,.sidebar-community>button,.sidebar-footer,.top-tabs [data-slot=tabs-trigger],.about-nav,.pick-point,.quiet-icon,.map-context-card p,.clicked-point-card>p,.community-stats span,.community-place-list small,.community-place-list>button>svg,.empty-message,.app-dialog [data-slot=dialog-description],.how-steps p,.extra-setting small,.detail-sheet [data-slot=sheet-description],.route-steps p,.approach-note,.no-photo>p,.no-photo>span,.report-metadata dt,.report-metadata dd>small,.form-field>label>span,.photo-upload>strong,.photo-upload>span,.form-field .file-input,.consent-label,.sources-button small,.source-card small,.data-note>svg,.fallback-place-label) { color: var(--muted-foreground); }
+html.dark :is(.geolocation-link,.steps-link,.text-button,.coverage-link,.sources-button,.source-card a,.source-links a,.external-source,.report-location>button,.file-input::file-selector-button,.route-map-label strong,.brand .brand-name .brand-dot,.endpoint-line,.route-card-top>svg,.clicked-point-card>div:first-child>svg) { color: var(--link); }
+html.dark .top-tabs [data-slot=tabs-trigger][data-state=active] { color: var(--link); }
+html.dark .top-tabs [data-slot=tabs-trigger]:after { background: var(--primary); }
+html.dark :is(.profile-card.selected,.route-card.selected,.report-location.has-location) { background: var(--accent); border-color: #749ee9; color: var(--accent-foreground); }
+html.dark .profile-card.selected>span:not(.profile-tick) { color: var(--accent-foreground); }
+html.dark :is(.origin-dot,.route-card.selected .route-choice-dot) { border-color: var(--primary); }
+html.dark :is(.route-choice-dot>span,.profile-tick) { background: var(--primary); color: var(--primary-foreground); }
+html.dark .profile-card:hover { border-color: var(--primary); }
+html.dark :is(.location-divider,.metric-divider) { background: var(--border); }
+html.dark :is(.pilot-badge,.clicked-actions button,.dialog-icon,.how-steps>div>span,.step-number) { background: var(--secondary); color: var(--link); border-color: var(--border); }
+html.dark :is(.pick-point:hover,.quiet-icon:hover,.map-right-controls button:hover,.community-place-list>button:hover,.clicked-actions button:hover,.photo-upload:hover) { background: var(--accent); color: var(--accent-foreground); border-color: #749ee9; }
+html.dark .primary-button { background: #3268d8; border-color: #709be8; color: #fff; }
+html.dark .primary-button:hover { background: #2559c1; border-color: #91b7ff; }
+html.dark :is(.inline-error,.about-data-note,.route-warnings,.source-status.source-delayed) { background: #392c20; border-color: #796047; color: #f3cd98; }
+html.dark :is(.route-warnings p,.route-steps small,.reports-error,.source-card p.source-error) { color: #f3cd98; }
+html.dark .route-card-tags .unknown-tag { background: #42341e; color: #f3cd98; }
+html.dark :is(.route-card-tags>span,.community-icon,.context-icon,.source-status,.place-detail-icon.utility,.list-kind.utility,.vote-actions>button.voted) { background: #193b35; color: #a8dfc3; border-color: #42735f; }
+html.dark :is(.place-detail-icon,.list-kind) { background: #43341f; color: #f0ca92; }
+html.dark .vote-counts { color: #a8dfc3; }
+html.dark :is(.vote-actions>button:hover,.report-map-button:hover) { background: #25483e; border-color: #598c75; }
+html.dark .map-chip.active:first-child { color: #f3cd98; border-color: #9b784d; }
+html.dark .map-chip.active:first-child>svg:first-child { color: #f3cd98; }
+html.dark .map-chip.active:not(:first-child) { background: #193b35; color: #a8dfc3; border-color: #4f8068; }
+html.dark :is(.map-surface,.leaflet-map,.map-loading) { background: var(--map-canvas); color: var(--foreground); }
+/* Only raster background tiles change appearance; photos, flags, route lines,
+   attribution and accessibility pins retain their own colors. */
+html.dark .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.88) contrast(.9); }
+html.dark .leaflet-road-fallback-pane path { stroke: #47617b; }
+html.dark :is(.leaflet-container .leaflet-control-attribution,.map-data-caption) { background: #142133ee; color: #c2cfe1; }
+html.dark .leaflet-container .leaflet-control-attribution a { color: #c2d9ff; }
+html.dark .leaflet-tooltip { background: var(--popover); color: var(--popover-foreground); border-color: var(--border); }
+html.dark .route-map-label { border-color: #587aa9; }
+html.dark .endpoint { border-color: #cedcf4; }
+html.dark :is(.community-stats,.report-metadata>div,.route-steps>li,.sidebar-community,.sources-button) { border-color: var(--border); }
+html.dark .form-field>input::placeholder,html.dark .form-field>textarea::placeholder { color: #93a5be; }
+html.dark .planner-sidebar { scrollbar-color: #49617f transparent; }
+html.dark :is(button,a,input,textarea,select):focus-visible { outline-color: var(--ring); }
+@media(max-width:720px) {
+  .theme-toggle[data-slot=button] { width: 34px; height: 34px; margin-right: 0; }
+  .header-location>span:not(.ukraine-flag) { display: none; }
+  html.dark .top-tabs[data-slot=tabs-list] { background: var(--secondary); }
+  html.dark .top-tabs [data-slot=tabs-trigger][data-state=active] { background: var(--accent)!important; }
+}
+@media(max-width:380px) {
+  .header-location .ukraine-flag { display: none; }
+}

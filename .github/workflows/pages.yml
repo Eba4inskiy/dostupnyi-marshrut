@@ -47,6 +47,7 @@ jobs:
       - name: Build for the configured Pages address
         env:
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
         run: npm run pages:build -- --base="${PAGES_BASE_PATH}/"
       - name: Check published files and routing worker
         env:

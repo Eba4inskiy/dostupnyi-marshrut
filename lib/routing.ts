@@ -1,4 +1,4 @@
-export type Point = {lat:number; lng:number; label:string};
+export type Point = {lat:number; lng:number; label:string; googlePlaceId?:string};
 export type Mobility = "wheelchair"|"stroller"|"walking"|"dog"|"bicycle";
 export type Preferences = {noSteps:boolean; gentleSlopes:boolean; noUnderpasses:boolean; smoothSurface:boolean; quietWays?:boolean;allowDismount?:boolean};
 export type OSMElement = {type:"node"|"way"; id:number; lat?:number; lon?:number; nodes?:number[]; tags?:Record<string,string>; in_region?:boolean};
