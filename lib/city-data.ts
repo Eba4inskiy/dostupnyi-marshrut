@@ -1,4 +1,4 @@
-import {inRightBank} from "./region";
+import {inCoverage} from "./region";
 import type {Report,ReportKind} from "./routing";
 
 export type SourceId="bicycle"|"dogs"|"toilets";
@@ -62,7 +62,7 @@ export async function fetchCitySource(id:SourceId):Promise<SourceData>{
    const url=new URL(resource.url);if(url.protocol!=="https:"||url.hostname!=="data.kyivcity.gov.ua")throw new Error("Джерело CSV змінило адресу");
    const playground=resource.name.startsWith("animalPlaygrounds");
    for(const r of parseCSV(await textFrom(url.href,1_000_000))){
-    const lat=Number(r.lat),lng=Number(r.lon);if(!inRightBank({lat,lng})){skipped++;continue;}
+    const lat=Number(r.lat),lng=Number(r.lon);if(!inCoverage({lat,lng})){skipped++;continue;}
     const address=[clean(r.addressThoroughfare),clean(r.addressLocatorDesignator)].filter(Boolean).join(", ");
     const info=[clean(r.addressDescription),playground&&r.area&&r.area!=="null"?`Площа: ${clean(r.area)} м².`:"",
      playground?`Огорожа за джерелом: ${r.fance==="TRUE"?"є":r.fance==="FALSE"?"немає":"невідомо"}.`:"",
@@ -80,7 +80,7 @@ export async function fetchCitySource(id:SourceId):Promise<SourceData>{
    if(id==="bicycle"){
     const geometry=f.geometry;const rawLines=geometry.type==="LineString"?[geometry.coordinates]:geometry.type==="MultiLineString"?geometry.coordinates:[];
     const lines:[number,number][][]=[];
-    for(const rawLine of rawLines as number[][][]){let line:[number,number][]=[];for(const coord of rawLine){const [lng,lat]=coord;if(inRightBank({lat,lng})){line.push([lat,lng]);}else{if(line.length>1)lines.push(line);line=[];}}if(line.length>1)lines.push(line);}
+    for(const rawLine of rawLines as number[][][]){let line:[number,number][]=[];for(const coord of rawLine){const [lng,lat]=coord;if(inCoverage({lat,lng})){line.push([lat,lng]);}else{if(line.length>1)lines.push(line);line=[];}}if(line.length>1)lines.push(line);}
     if(!lines.length){skipped++;continue;}
     const mid=lines[0][Math.floor(lines[0].length/2)];
     const r=report(id,String(p.objectid??f.id),"cycleway",mid[0],mid[1],`${clean(p.objectname)||"Велодоріжка"} · ${clean(p.addressdescription)}`,
@@ -88,13 +88,13 @@ export async function fetchCitySource(id:SourceId):Promise<SourceData>{
     r.lines=lines;features.push(r);
    }else{
     if(f.geometry.type!=="Point"){skipped++;continue;}
-    const [lng,lat]=f.geometry.coordinates as number[];if(!inRightBank({lat,lng})){skipped++;continue;}
+    const [lng,lat]=f.geometry.coordinates as number[];if(!inCoverage({lat,lng})){skipped++;continue;}
     features.push(report(id,String(p.objectid??f.id),"toilet",lat,lng,`Туалет · ${clean(p.location)||clean(p.address)}`,
      [`Адреса: ${clean(p.address)}.`,clean(p.status)?`Статус у джерелі: ${clean(p.status)}.`:"",clean(p.workschedule),clean(p.workingdays),clean(p.price),
       clean(p.reasonforclosing),"Доступність для крісла колісного не підтверджена. Це відомості міського реєстру, а не перевірка на місці."].filter(Boolean).join(" "),fetched,edit));
    }
   }
  }
- if(!features.length)throw new Error("У відповіді немає придатних об’єктів правого берега");
+ if(!features.length)throw new Error("У відповіді немає придатних об’єктів Києва");
  return {id,...CITY_SOURCES[id],fetched_at:fetched,updated_at:updated,features,status:"live",skipped};
 }

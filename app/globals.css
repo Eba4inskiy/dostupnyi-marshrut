@@ -20,7 +20,7 @@ body{font-weight:500}button{transition:background .15s,color .15s,border-color .
 @media(max-width:1100px) and (min-width:721px){.map-chip{font-size:12px;gap:5px}.map-chip>span:not(.wc-symbol){font-size:12px}.map-filter-group{gap:5px}.map-chip{padding:9px}}
 @media(max-width:380px){.map-chip{font-size:12px}.map-chip>svg{width:14px}.map-chip{padding:10px 7px}.preferences-list>label>span{font-size:13px}}
 
-/* Five profiles and right-bank source layers. */
+/* Five profiles and citywide source layers. */
 .mobility-profiles[data-slot=radio-group]{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
 .mobility-profiles .profile-card{grid-column:span 2;min-height:88px}
 .mobility-profiles .profile-card:nth-child(n+4){grid-column:span 3;min-height:76px;flex-direction:row;gap:10px}

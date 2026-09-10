@@ -93,3 +93,11 @@ html.dark :is(button,a,input,textarea,select):focus-visible { outline-color: var
 @media(max-width:380px) {
   .header-location .ukraine-flag { display: none; }
 }
+
+.brand .brand-logo { width: 196px; height: auto; display: block; }
+.brand .brand-logo-dark { display: none; }
+html.dark .brand .brand-logo-light { display: none; }
+html.dark .brand .brand-logo-dark { display: block; }
+@media(max-width:1050px) { .brand .brand-logo { width: 180px; } }
+@media(max-width:720px) { .brand .brand-logo { width: 160px; } }
+@media(max-width:380px) { .brand .brand-logo { width: 145px; } }

@@ -40,9 +40,11 @@ for (const [path, cssUrl] of styles) {
   }
 }
 await localFile(base + "vendor/leaflet.js");
+for (const file of ["dostupnyi-marshrut-logo.svg","dostupnyi-marshrut-logo-dark.svg","dostupnyi-marshrut-icon.svg"]) await localFile(base + "brand/" + file);
+await localFile(base + "information.html");
 await localFile(base + "data/kyiv-pois.json");
 const index = JSON.parse(await readFile(await localFile(base + "data/network-index.json"), "utf8"));
-assert.equal(index.districts.length, 7);
+assert.equal(index.districts.length, 10);
 for (const tile of index.tiles) await localFile(base + tile.url.replace(/^\/+/, ""));
 for (const id of ["bicycle", "dogs", "toilets"]) {
   const data = JSON.parse(await readFile(await localFile(`${base}data/city-${id}.json`), "utf8"));
@@ -80,7 +82,16 @@ try {
   worker.onmessage({data:{network,start,end,profile:"wheelchair",prefs:{noSteps:true,gentleSlopes:true,noUnderpasses:true,smoothSurface:true},reports:[]}});
   assert.ok(!reply?.error, reply?.error);
   assert.ok(reply.routes[0].coords.length > 2 && reply.routes[0].distance > 800);
-  console.log(`Pages ${base}: ${checked} asset/data checks; ${index.tiles.length} tiles; built worker route ${Math.round(reply.routes[0].distance)} m.`);
+  const rightDistance=Math.round(reply.routes[0].distance);
+  const landmarks=JSON.parse(await readFile("lib/left-bank-places.json","utf8"));
+  const leftStart=landmarks.find(p=>p.label==="Метро «Позняки»"),leftEnd=landmarks.find(p=>p.label==="Метро «Осокорки»");
+  assert.ok(leftStart&&leftEnd);
+  const leftNetwork=await loadNetwork(leftStart,leftEnd);
+  reply=undefined;
+  worker.onmessage({data:{network:leftNetwork,start:leftStart,end:leftEnd,profile:"stroller",prefs:{noSteps:true,gentleSlopes:true,noUnderpasses:true,smoothSurface:true},reports:[]}});
+  assert.ok(!reply?.error,reply?.error);
+  assert.ok(reply.routes[0].coords.length>2&&reply.routes[0].distance>1000);
+  console.log(`Pages ${base}: ${checked} asset/data checks; ${index.tiles.length} tiles; built worker routes on both banks ${rightDistance} / ${Math.round(reply.routes[0].distance)} m.`);
 } finally {
   globalThis.fetch = originalFetch;
   await rm(temp, {recursive:true,force:true});

@@ -4,7 +4,7 @@ import {useEffect,useRef,useState} from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import {Bike,Dog,Trees,Droplets,Wrench,Armchair,ArrowUpDown,Construction,Footprints,MapPin,TriangleAlert,Accessibility,ChevronUp,LocateFixed,Plus,Minus,Maximize,Layers,LoaderCircle,Check,Flag} from "lucide-react";
 import {type Point,type Report,type Network,type RouteResult,PLACES,isObstacle} from "@/lib/routing";
-import {RIGHT_BANK,RIGHT_BANK_BOUNDS} from "@/lib/region";
+import {KYIV_DISTRICTS,COVERAGE_BOUNDS} from "@/lib/region";
 // Leaflet is vendored locally, so the map does not depend on a third-party script loader.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LApi=any;
@@ -19,12 +19,12 @@ export default function KyivMap({start,end,route,features,network,onSelect,onPic
  useEffect(()=>{if(!ready||!instance.current)return;const attribution='Точки місць: <a class="google-map-credit" translate="no" href="https://maps.google.com/" target="_blank" rel="noreferrer">Google Maps</a>';const map=instance.current;if(start.googlePlaceId||end.googlePlaceId)map.attributionControl.addAttribution(attribution);return()=>{map.attributionControl.removeAttribution(attribution);};},[ready,start.googlePlaceId,end.googlePlaceId]);
  useEffect(()=>{let canceled=false;let observer:ResizeObserver|undefined;leaflet().then(L=>{if(canceled||!root.current)return;const map=L.map(root.current,{zoomControl:false,attributionControl:true,minZoom:10,maxZoom:19,preferCanvas:true,maxBounds:[[50.14,30.12],[50.68,30.91]],maxBoundsViscosity:.8}).setView([50.4474,30.5196],15);instance.current=map;map.createPane("city-network").style.zIndex="350";map.createPane("coverage").style.zIndex="320";map.createPane("road-fallback").style.zIndex="300";map.attributionControl.setPrefix(false);map.on("moveend",()=>setViewportVersion(v=>v+1));
  const tiles=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>'}).addTo(map);let failures=0;tiles.on("tileerror",()=>{if(++failures>=3)setTileProblem(true);});tiles.on("tileload",()=>{failures=0;setTileProblem(false);});
- const fallback=L.layerGroup().addTo(map);L.geoJSON(RIGHT_BANK,{pane:"coverage",style:{color:"#647895",weight:1.4,dashArray:"5 6",opacity:.65,fill:false},interactive:false}).addTo(map);
+ const fallback=L.layerGroup().addTo(map);L.geoJSON(KYIV_DISTRICTS,{pane:"coverage",style:{color:"#647895",weight:1.4,dashArray:"5 6",opacity:.65,fill:false},interactive:false}).addTo(map);
  const city=L.layerGroup().addTo(map);layers.current={L,fallback,city,paths:L.layerGroup().addTo(map),markers:L.layerGroup().addTo(map)};
  map.attributionControl.addAttribution('<a href="https://data.kyivcity.gov.ua/" target="_blank" rel="noreferrer">Міські дані: КМДА</a>');
  map.on("click",(e:{latlng:{lat:number;lng:number}})=>latest.current.onPick({...e.latlng,label:`Точка на карті (${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)})`}));
  const fit=()=>{const d=latest.current;const points=d.route?.coords||[[d.start.lat,d.start.lng],[d.end.lat,d.end.lng]];map.fitBounds(L.latLngBounds(points),{padding:[75,90],maxZoom:16,animate:true});};
- const coverage=()=>map.fitBounds([[RIGHT_BANK_BOUNDS.south,RIGHT_BANK_BOUNDS.west],[RIGHT_BANK_BOUNDS.north,RIGHT_BANK_BOUNDS.east]],{padding:[30,65]});
+ const coverage=()=>map.fitBounds([[COVERAGE_BOUNDS.south,COVERAGE_BOUNDS.west],[COVERAGE_BOUNDS.north,COVERAGE_BOUNDS.east]],{padding:[30,65]});
  handleRef.current={coverage,zoom:(n:number)=>map.setZoom(map.getZoom()+n),fit,fly:(p:Point)=>map.flyTo([p.lat,p.lng],16)};
  observer=new ResizeObserver(()=>map.invalidateSize());observer.observe(root.current);setReady(true);
  }).catch(e=>setError(e.message));return()=>{canceled=true;observer?.disconnect();instance.current?.remove();instance.current=null;handleRef.current=null;};},[handleRef]);

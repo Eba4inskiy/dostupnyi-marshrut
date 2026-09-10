@@ -1,6 +1,6 @@
 import {database,bucket,actorId,sameOrigin,apiError} from "@/lib/storage";
 import {KIND_LABELS} from "@/lib/routing";
-import {inRightBank} from "@/lib/region";
+import {inCoverage} from "@/lib/region";
 export const dynamic="force-dynamic";
 export async function GET(request:Request){try{const actor=await actorId(request);const rows=await database().prepare(`SELECT r.id,r.kind,r.title,r.description,r.lat,r.lng,r.role,r.photo_key,r.created_at,
  (SELECT COUNT(*) FROM votes v WHERE v.report_id=r.id AND v.vote='confirm') AS confirmations,
@@ -11,7 +11,7 @@ export async function POST(request:Request){if(!sameOrigin(request))return Respo
  if(Number(request.headers.get("content-length"))>6*1024*1024)return Response.json({error:"Фото має бути меншим за 5 МБ."},{status:413});
  try{const form=await request.formData();const id=String(form.get("id")||"");if(!/^[a-f0-9-]{36}$/.test(id))return Response.json({error:"Некоректний ідентифікатор"},{status:400});
  const kind=String(form.get("kind")||"");const title=String(form.get("title")||"").trim();const description=String(form.get("description")||"").trim();const lat=Number(form.get("lat")),lng=Number(form.get("lng"));const role=String(form.get("role")||"");
- if(!Object.hasOwn(KIND_LABELS,kind)||!title||title.length>100||description.length>1200||!inRightBank({lat,lng})||!["Мешканець / мешканка","Бізнес","Громада"].includes(role))return Response.json({error:"Перевірте назву, координати на правому березі Києва та тип повідомлення."},{status:400});
+ if(!Object.hasOwn(KIND_LABELS,kind)||!title||title.length>100||description.length>1200||!inCoverage({lat,lng})||!["Мешканець / мешканка","Бізнес","Громада"].includes(role))return Response.json({error:"Перевірте назву, координати в межах Києва та тип повідомлення."},{status:400});
  const actor=await actorId(request);const db=database();const existing=await db.prepare("SELECT id FROM reports WHERE id=? AND actor=?").bind(id,actor.id).first();if(existing)return Response.json({id});
  const since=new Date(Date.now()-3600000).toISOString();const count=await db.prepare("SELECT COUNT(*) AS total FROM reports WHERE actor=? AND created_at>?").bind(actor.id,since).first<{total:number}>();if((count?.total||0)>=10)return Response.json({error:"Ви додали 10 повідомлень за годину. Спробуйте пізніше."},{status:429});
  const photo=form.get("photo");let photoKey:string|null=null;

@@ -4,7 +4,7 @@ export const dynamic="force-dynamic";
 const inFlight=new Map<SourceId,Promise<SourceData>>();
 const TTL=6*60*60*1000;
 async function getSource(id:SourceId,origin:string):Promise<SourceData>{
- const key=`city-data/v2/${id}.json`;let cached:SourceData|undefined;
+ const key=`city-data/v3-kyiv/${id}.json`;let cached:SourceData|undefined;
  try{const stored=await env.BUCKET.get(key);if(stored)cached=await new Response(stored.body).json() as SourceData;}catch{}
  if(cached&&Date.now()-Date.parse(cached.fetched_at)<TTL)return {...cached,status:"cache"};
  try{

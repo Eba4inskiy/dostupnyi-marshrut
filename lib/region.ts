@@ -1,5 +1,5 @@
-import boundary from "./right-bank.json";
-export const RIGHT_BANK = boundary;
+import boundary from "./kyiv-boundary.json";
+export const KYIV_DISTRICTS = boundary;
 type Position = {lat: number; lng: number};
 const districts = boundary.features.map(f => {
   const coords = f.geometry.coordinates.flat(2);
@@ -20,8 +20,8 @@ export function districtAt(p: Position) {
   return districts.find(d=>p.lat>=d.s && p.lat<=d.n && p.lng>=d.w && p.lng<=d.e &&
     d.polygons.some(rings=>ringContains(p,rings[0])&&!rings.slice(1).some(r=>ringContains(p,r))))?.name ?? null;
 }
-export function inRightBank(p: Position) { return districtAt(p)!==null; }
-export const RIGHT_BANK_BOUNDS = {
+export function inCoverage(p: Position) { return districtAt(p)!==null; }
+export const COVERAGE_BOUNDS = {
   south: Math.min(...districts.map(d=>d.s)), north: Math.max(...districts.map(d=>d.n)),
   west: Math.min(...districts.map(d=>d.w)), east: Math.max(...districts.map(d=>d.e))
 };

@@ -4,7 +4,7 @@ export type NetworkIndex={bounds:number[];osm_timestamp:string;retrieved_at:stri
 let indexPromise:Promise<NetworkIndex>|undefined;
 const tiles=new Map<string,Promise<Network>>();
 export function loadNetworkIndex(){
- if(!indexPromise)indexPromise=fetch(assetUrl("data/network-index.json"),{cache:"no-cache"}).then(async r=>{if(!r.ok)throw new Error("Не вдалося відкрити мережу правого берега");return r.json() as Promise<NetworkIndex>;}).catch(e=>{indexPromise=undefined;throw e;});
+ if(!indexPromise)indexPromise=fetch(assetUrl("data/network-index.json"),{cache:"no-cache"}).then(async r=>{if(!r.ok)throw new Error("Не вдалося відкрити мережу Києва");return r.json() as Promise<NetworkIndex>;}).catch(e=>{indexPromise=undefined;throw e;});
  return indexPromise;
 }
 export async function loadNetwork(start:Point,end:Point,all=false):Promise<Network>{
@@ -14,14 +14,14 @@ export async function loadNetwork(start:Point,end:Point,all=false):Promise<Netwo
  const data:Network[]=[];
  for(let i=0;i<wanted.length;i+=4){
   const batch=await Promise.all(wanted.slice(i,i+4).map(t=>{
-   const url=`${assetUrl(t.url)}?v=${encodeURIComponent(index.osm_timestamp)}`;
+   const url=`${assetUrl(t.url)}?v=${encodeURIComponent(`${index.osm_timestamp}-${index.retrieved_at}`)}`;
    if(!tiles.has(url))tiles.set(url,fetch(url).then(async r=>{if(!r.ok)throw new Error("Частину мережі шляхів не завантажено. Спробуйте ще раз.");return r.json() as Promise<Network>;}).catch(e=>{tiles.delete(url);throw e;}));
    return tiles.get(url)!;
   }));data.push(...batch);
  }
  const elements=new Map<string,OSMElement>();
  for(const tile of data)for(const e of tile.elements){const key=`${e.type}-${e.id}`,prev=elements.get(key);elements.set(key,prev?{...prev,...e,tags:{...prev.tags,...e.tags}}:e);}
- return {elements:[...elements.values()],osm3s:{timestamp_osm_base:index.osm_timestamp},prototype_meta:{bounds:box,retrieved_at:index.retrieved_at,scope:"kyiv-right-bank"}};
+ return {elements:[...elements.values()],osm3s:{timestamp_osm_base:index.osm_timestamp},prototype_meta:{bounds:box,retrieved_at:index.retrieved_at,scope:"kyiv-city"}};
 }
 export type RouteJob={network:Network;start:Point;end:Point;profile:Mobility;prefs:Preferences;reports:Report[]};
 export async function routeInWorker(job:RouteJob):Promise<RouteResult[]>{
@@ -39,7 +39,7 @@ export async function planLocalRoute(start:Point,end:Point,profile:Mobility,pref
  try{return {network,routes:await routeInWorker({network,start,end,profile,prefs,reports})};}
  catch(e){
   if(!(e instanceof Error)||!e.message.includes("зв’язний маршрут"))throw e;
-  // A detour may leave the initial corridor. Retry on the complete right bank.
+  // A detour may leave the initial corridor. Retry on the complete city.
   network=await loadNetwork(start,end,true);
   return {network,routes:await routeInWorker({network,start,end,profile,prefs,reports})};
  }

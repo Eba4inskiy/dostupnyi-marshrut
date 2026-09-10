@@ -1,3 +1,4 @@
+import leftBankPlaces from "./left-bank-places.json";
 export type Point = {lat:number; lng:number; label:string; googlePlaceId?:string};
 export type Mobility = "wheelchair"|"stroller"|"walking"|"dog"|"bicycle";
 export type Preferences = {noSteps:boolean; gentleSlopes:boolean; noUnderpasses:boolean; smoothSurface:boolean; quietWays?:boolean;allowDismount?:boolean};
@@ -38,6 +39,7 @@ export const PLACES:Point[] = [
  {label:"Феофанія, вхід",lat:50.34162,lng:30.48677},
  {label:"Пирогів, музей просто неба",lat:50.35434,lng:30.51238},
  {label:"Метро «Теремки»",lat:50.36732,lng:30.45428},
+ ...leftBankPlaces.map(({label,lat,lng})=>({label,lat,lng})),
 ];
 export function inKyiv(p:{lat:number;lng:number}) {return Number.isFinite(p.lat)&&Number.isFinite(p.lng)&&p.lat>=KYIV_BOUNDS.south&&p.lat<=KYIV_BOUNDS.north&&p.lng>=KYIV_BOUNDS.west&&p.lng<=KYIV_BOUNDS.east;}
 export function distance(a:{lat:number;lng:number},b:{lat:number;lng:number}) {const r=Math.PI/180;const x=(b.lng-a.lng)*r*Math.cos((a.lat+b.lat)/2*r),y=(b.lat-a.lat)*r;return Math.hypot(x,y)*6371000;}

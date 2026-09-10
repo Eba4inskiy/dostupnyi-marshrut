@@ -1,5 +1,5 @@
 import type {Point} from "./routing";
-import {inRightBank} from "./region";
+import {inCoverage} from "./region";
 
 // This is a browser key, visible in the published JavaScript. Restrict it to
 // the site's HTTP referrers and the enabled Maps/Places UI Kit APIs in Google.
@@ -22,7 +22,7 @@ export function pointFromGooglePlace(place:GooglePlace):Point {
   const lat=typeof location?.lat==="function"?location.lat():location?.lat;
   const lng=typeof location?.lng==="function"?location.lng():location?.lng;
   if(typeof lat!=="number"||typeof lng!=="number"||!Number.isFinite(lat)||!Number.isFinite(lng))throw new Error("Для цього місця Google не повернув координати.");
-  if(!inRightBank({lat,lng}))throw new Error("Це місце поза правим берегом Києва. Картку можна переглянути, але маршрут сюди поки недоступний.");
+  if(!inCoverage({lat,lng}))throw new Error("Це місце поза межами Києва. Картку можна переглянути, але маршрут сюди поки недоступний.");
   return {lat,lng,label:`Google Maps · ${lat.toFixed(4)}, ${lng.toFixed(4)}`,googlePlaceId:place.id};
 }
 
